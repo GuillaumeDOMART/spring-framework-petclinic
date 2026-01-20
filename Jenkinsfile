@@ -6,7 +6,6 @@ pipeline {
         maven "Maven3.9"
         jdk 'Corretto-17'
     }
-
     stages {
         stage('Build') {
             steps {

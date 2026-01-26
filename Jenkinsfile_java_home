@@ -4,6 +4,7 @@ pipeline {
     environment {
         // On définit le nom du JDK que l'on souhaite utiliser
         // Ce nom doit correspondre exactement à celui dans "Global Tool Configuration"
+        maven "Maven3.9.12"
         JDK_NAME = 'Corretto-17'
     }
 

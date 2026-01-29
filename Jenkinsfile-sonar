@@ -25,7 +25,7 @@ pipeline {
                     steps {
                         // Analyse statique du code
                         withSonarQubeEnv('SonarQube') {
-                            sh "mvn sonar:sonar -Dsonar.projectKey=${PROJECT_KEY}"
+                            sh "mvn clean sonar:sonar deploy"
                         }
                     }
                     post {

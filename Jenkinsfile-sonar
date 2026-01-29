@@ -11,7 +11,7 @@ pipeline {
             steps {
                 // Analyse statique du code
                 withSonarQubeEnv('SonarQube') {
-                    sh "mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:sonar package"
+                    sh "mvn package org.sonarsource.scanner.maven:sonar-maven-plugin:sonar "
                 }
             }
             post {

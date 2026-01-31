@@ -9,6 +9,7 @@ pipeline {
         DOCKER_IMAGE = 'petclinic-app'
         CONTAINER_NAME = 'petclinic-container'
         NEXUS_CREDENTIALS = credentials('nexuslogin')
+        GITHUB_CREDENTIALS = credentials('githublogin')
     }
     stages {
         stage('Download Artifact from Nexus') {
@@ -35,6 +36,22 @@ pipeline {
                     // Run the new container
                     app.run("--name ${CONTAINER_NAME} -p 30080:8080")
                 }
+            }
+        }
+    }
+    post {
+        success {
+            script {
+                // Notify GitHub of success
+                // Requires the GitHub plugin to be installed and configured
+                // This updates the commit status
+                updateGitlabCommitStatus name: 'build', state: 'success'
+            }
+        }
+        failure {
+            script {
+                // Notify GitHub of failure
+                updateGitlabCommitStatus name: 'build', state: 'failed'
             }
         }
     }

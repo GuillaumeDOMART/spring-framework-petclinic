@@ -7,6 +7,7 @@ pipeline {
         VERSION = '5.2.4'
         WAR_NAME = 'petclinic.war'
         DOCKER_IMAGE = 'petclinic-app'
+        CONTAINER_NAME = 'petclinic-container'
         NEXUS_CREDENTIALS = credentials('nexuslogin')
     }
     stages {
@@ -18,10 +19,21 @@ pipeline {
                 }
             }
         }
-        stage('Build Docker Image') {
+        stage('Build and Run Docker Image') {
             steps {
                 script {
-                    docker.build("${DOCKER_IMAGE}:${VERSION}")
+                    // Build the image
+                    def app = docker.build("${DOCKER_IMAGE}:${VERSION}")
+
+                    // Check if container exists and remove it if it does
+                    sh """
+                        if [ "\$(docker ps -aq -f name=${CONTAINER_NAME})" ]; then
+                            docker rm -f ${CONTAINER_NAME}
+                        fi
+                    """
+
+                    // Run the new container
+                    app.run("--name ${CONTAINER_NAME} -p 30080:8080")
                 }
             }
         }

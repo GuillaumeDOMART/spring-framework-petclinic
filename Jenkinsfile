@@ -9,6 +9,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Run Maven on a Unix agent
+                echo "Auto Trigger"
                 sh "mvn clean install package"
             }
             post {

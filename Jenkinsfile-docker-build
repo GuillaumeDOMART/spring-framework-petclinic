@@ -8,7 +8,7 @@ pipeline {
         WAR_NAME = 'petclinic.war'
         DOCKER_IMAGE = 'petclinic-app'
         CONTAINER_NAME = 'petclinic-container'
-        NEXUS_CREDENTIALS = credentials('nexuslogin')
+        NEXUS_CREDENTIALS = credentials('Nexus-admin-login')
     }
     stages {
         stage('Download Artifact from Nexus') {

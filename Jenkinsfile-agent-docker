@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent none
 
     stages {
         stage('Build Java') {
@@ -14,12 +14,11 @@ pipeline {
                 // Cette commande "sort" le fichier du conteneur avant qu'il ne soit détruit
                 archiveArtifacts artifacts: 'target/*.war', fingerprint: true
             }
-        }
-    }
-
-    post {
-        always {
-            cleanWs()
+            post {
+                always {
+                    cleanWs()
+                }
+            }
         }
     }
 }

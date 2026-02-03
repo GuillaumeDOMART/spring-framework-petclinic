@@ -1,24 +1,24 @@
 pipeline {
-    agent none
+    agent {
+        docker {
+            image 'maven:3.9-eclipse-temurin-21'
+            args '-v $HOME/.m2:/root/.m2'
+        }
+    }
 
     stages {
         stage('Build Java') {
-            agent {
-                docker {
-                    image 'maven:3.9-eclipse-temurin-21'
-                    args '-v $HOME/.m2:/root/.m2'
-                }
-            }
+
             steps {
                 sh 'mvn clean package'
                 // Cette commande "sort" le fichier du conteneur avant qu'il ne soit détruit
                 archiveArtifacts artifacts: 'target/*.war', fingerprint: true
             }
-            post {
-                always {
-                    cleanWs()
-                }
-            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
         }
     }
 }

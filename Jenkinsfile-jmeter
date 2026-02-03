@@ -12,15 +12,4 @@ pipeline {
             }
         }
     }
-
-    post {
-        always {
-            logParser {
-                parsingtRulesPath: 'parserules',
-                useProjectRule: false,
-                failBuildOnError: false,
-                unstableOnWarning: true
-            }
-        }
-    }
 }
